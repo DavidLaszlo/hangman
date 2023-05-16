@@ -70,13 +70,13 @@
   <component name="RunManager">
     <configuration name="HangmanApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="hangman.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.rws.workshop.hangman.HangmanApplication" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.rws.workshop.hangman.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.rws.workshop.hangman.HangmanApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>

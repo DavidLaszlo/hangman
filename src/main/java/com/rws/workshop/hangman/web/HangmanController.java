@@ -1,5 +1,7 @@
 package com.rws.workshop.hangman.web;
 
+import com.rws.workshop.hangman.persistence.WordsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,11 +32,17 @@ public class HangmanController {
 
     private String currentWord = null;
 
+    @Autowired
+    private WordsRepository wordsRepository;
+
     private String generateRandomWord() {
         if (currentWord == null) {
             Random random = new Random();
-            int index = random.nextInt(wordList.length);
-            currentWord = wordList[index];
+//            int index = random.nextInt(wordList.length);
+//            currentWord = wordList[index];
+            var wordsFromDb = wordsRepository.findAll();
+            int index = random.nextInt(wordsFromDb.size());
+            currentWord = wordsFromDb.get(index).getWord();
         }
         return currentWord;
     }

@@ -12,16 +12,13 @@ public class H2Config {
     public CommandLineRunner initializeDatabase(WordsRepository wordsRepository) {
         return args -> {
             // Create the schema and tables
-            wordsRepository.count(); // This triggers the creation of the schema and tables
+            wordsRepository.count();
 
             // Create and save sample entities
-            WordsEntity entity1 = new WordsEntity();
-            entity1.setWord("apple");
-            wordsRepository.save(entity1);
-
-            WordsEntity entity2 = new WordsEntity();
-            entity2.setWord("banana");
-            wordsRepository.save(entity2);
+            wordsRepository.save(new WordsEntity("apple"));
+            wordsRepository.save(new WordsEntity("banana"));
+            wordsRepository.save(new WordsEntity("pineapple"));
+            wordsRepository.save(new WordsEntity("orange"));
 
             // ... add more entities if needed
         };

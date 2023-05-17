@@ -3,6 +3,7 @@ package com.rws.workshop.hangman.persistence;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "words")
 public class WordsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +15,10 @@ public class WordsEntity {
 
 
     public WordsEntity() {
+    }
+
+    public WordsEntity(String word) {
+        this.word = word;
     }
 
     public WordsEntity(Long id, String word) {

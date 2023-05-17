@@ -1,5 +1,6 @@
 package com.rws.workshop.hangman.web;
 
+import com.rws.workshop.hangman.persistence.StaticWordsRepository;
 import com.rws.workshop.hangman.persistence.WordsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,33 +16,19 @@ import java.util.Random;
 @CrossOrigin
 @RestController
 public class HangmanController {
-    private final String[] wordList = {"representative",
-            "discrimination",
-            "responsibility",
-            "superintendent",
-            "infrastructure",
-            "extraterrestrial",
-            "characteristic",
-            "constitutional",
-            "administration",
-            "correspondence",
-            "rehabilitation",
-            "recommendation",
-            "disappointment",
-            "identification"};
+    public static final Random RANDOM = new Random();
 
     private String currentWord = null;
 
     @Autowired
-    private WordsRepository wordsRepository;
+//    private WordsRepository wordsRepository;
+    private StaticWordsRepository wordsRepository;
 
-    private String generateRandomWord() {
+
+    private String getWordFromDb() {
         if (currentWord == null) {
-            Random random = new Random();
-//            int index = random.nextInt(wordList.length);
-//            currentWord = wordList[index];
             var wordsFromDb = wordsRepository.findAll();
-            int index = random.nextInt(wordsFromDb.size());
+            int index = RANDOM.nextInt(wordsFromDb.size());
             currentWord = wordsFromDb.get(index).getWord();
         }
         return currentWord;
@@ -51,8 +38,10 @@ public class HangmanController {
     public GuessResponse handleGuess(@RequestParam("guessedLetter") String guessedLetter) {
 
         // Get the word for the game (generate or retrieve from a data source)
-        String word = generateRandomWord();
+//        String word = generateRandomWord();
+        String word = getWordFromDb();
 
+        // retrieve initial length of the word
         if (guessedLetter == null || guessedLetter.isBlank()) {
             return new GuessResponse(Collections.emptyList(), word.length());
         }
